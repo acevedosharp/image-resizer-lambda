@@ -3,10 +3,12 @@ const AWS = require('aws-sdk');
 
 exports.handler = async (event) => {
 
+    console.log('One lambda invocation')
+
     const perFolderSizeMappings = {
-        "product-images": { width: 210, height: 210 },
-        "category-images": { width: 80, height: 80 },
-        "promotion-images": { width: 477, height: 267 },
+        "products": { width: 210, height: 210 },
+        "categories": { width: 80, height: 80 },
+        "promotions": { width: 477, height: 267 },
         "banner": { width: 1624, height: 400 }
     }
 
@@ -23,18 +25,18 @@ exports.handler = async (event) => {
     for (const record of event.Records) {
 
         const objectKey = record.s3.object.key
-        const dotIndex = objectKey.lastIndexOf('.')
-        const objectKeyWithoutExtension = objectKey.substring(0, dotIndex)
-        const objectExtension = objectKey.substring(dotIndex+1, objectKey.lenth)
-        const targetExtension = ['jpeg', 'jpg'].includes(objectExtension) ? 'jpeg' : 'webp'
+        console.log(`objectKey: ${objectKey}`)
 
-        const targetFolder = objectKey.split['/']
+        const targetFolder = objectKey.split('/')[0]
 
         try {
             const data = await S3.getObject({
                 Bucket: 'merca4-raw-images',
                 Key: objectKey
             }).promise()
+
+            const objectExtension = data.ContentType.replace('image/', '')
+            const targetExtension = ['jpeg', 'jpg'].includes(objectExtension) ? 'jpeg' : 'webp'
 
             let buffer
             if (targetExtension === 'jpeg') {
@@ -58,7 +60,7 @@ exports.handler = async (event) => {
             }
 
             await S3.putObject({
-                Key: `${objectKeyWithoutExtension}.${targetExtension}`,
+                Key: objectKey,
                 Body: buffer,
                 Bucket: 'merca4-images',
                 ContentType: `image/${targetExtension}`,
