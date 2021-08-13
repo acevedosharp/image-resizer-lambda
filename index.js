@@ -2,9 +2,6 @@ const sharp = require('sharp');
 const AWS = require('aws-sdk');
 
 exports.handler = async (event) => {
-
-    console.log('One lambda invocation')
-
     const perFolderSizeMappings = {
         "products": { width: 210, height: 210 },
         "categories": { width: 80, height: 80 },
@@ -16,8 +13,8 @@ exports.handler = async (event) => {
         signatureVersion: 'v4',
         region: 'us-east-2',
         credentials: {
-            accessKeyId: 'AKIA5JKU5W6L3NYMAJJ5',
-            secretAccessKey: '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'
+            accessKeyId: process.env.ACCESS_KEY,
+            secretAccessKey: process.env.SECRET_KEY
         }
     });
 
@@ -46,7 +43,7 @@ exports.handler = async (event) => {
                         height: perFolderSizeMappings[targetFolder].height,
                         fit: sharp.fit.cover
                     })
-                    .jpeg({ quality: 80, mozjpeg: true })
+                    .jpeg({ quality: 100, mozjpeg: true })
                     .toBuffer()
             } else {
                 buffer = await sharp(data.Body)
@@ -55,7 +52,7 @@ exports.handler = async (event) => {
                         height: perFolderSizeMappings[targetFolder].height,
                         fit: sharp.fit.cover
                     })
-                    .webp(targetFolder === 'banner' ? { quality: 100, lossless: true } : { quality: 75 })
+                    .webp(targetFolder === 'banner' ? { quality: 100, lossless: true } : { quality: 80 })
                     .toBuffer()
             }
 
