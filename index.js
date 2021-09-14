@@ -4,20 +4,20 @@ const AWS = require('aws-sdk');
 exports.handler = async (event) => {
     const perFolderSizeMappings = {
         "products": {
-            width: process.env.PRODUCT_WIDTH,
-            height: process.env.PRODUCT_HEIGHT
+            width: parseInt(process.env.PRODUCT_WIDTH),
+            height: parseInt(process.env.PRODUCT_HEIGHT)
         },
         "categories": {
-            width: process.env.CATEGORY_WIDTH,
-            height: process.env.CATEGORY_HEIGHT
+            width: parseInt(process.env.CATEGORY_WIDTH),
+            height: parseInt(process.env.CATEGORY_HEIGHT)
         },
         "promotions": {
-            width: process.env.PROMOTION_WIDTH,
-            height: process.env.PROMOTION_HEIGHT
+            width: parseInt(process.env.PROMOTION_WIDTH),
+            height: parseInt(process.env.PROMOTION_HEIGHT)
         },
         "banner": {
-            width: process.env.BANNER_WIDTH,
-            height: process.env.BANNER_HEIGHT
+            width: parseInt(process.env.BANNER_WIDTH),
+            height: parseInt(process.env.BANNER_HEIGHT)
         }
     }
 
