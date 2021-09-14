@@ -3,10 +3,22 @@ const AWS = require('aws-sdk');
 
 exports.handler = async (event) => {
     const perFolderSizeMappings = {
-        "products": { width: 210, height: 210 },
-        "categories": { width: 80, height: 80 },
-        "promotions": { width: 477, height: 267 },
-        "banner": { width: 1624, height: 400 }
+        "products": {
+            width: process.env.PRODUCT_WIDTH,
+            height: process.env.PRODUCT_HEIGHT
+        },
+        "categories": {
+            width: process.env.CATEGORY_WIDTH,
+            height: process.env.CATEGORY_HEIGHT
+        },
+        "promotions": {
+            width: process.env.PROMOTION_WIDTH,
+            height: process.env.PROMOTION_HEIGHT
+        },
+        "banner": {
+            width: process.env.BANNER_WIDTH,
+            height: process.env.BANNER_HEIGHT
+        }
     }
 
     const S3 = new AWS.S3({
