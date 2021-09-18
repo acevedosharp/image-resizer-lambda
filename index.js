@@ -2,6 +2,9 @@ const sharp = require('sharp');
 const AWS = require('aws-sdk');
 
 exports.handler = async (event) => {
+    const originBucket = process.env.ORIGIN_BUCKET
+    const targetbucket = process.env.TARGET_BUCKET
+
     const perFolderSizeMappings = {
         "products": {
             width: parseInt(process.env.PRODUCT_WIDTH),
@@ -40,7 +43,7 @@ exports.handler = async (event) => {
 
         try {
             const data = await S3.getObject({
-                Bucket: 'merca4-raw-images',
+                Bucket: originBucket,
                 Key: objectKey
             }).promise()
 
@@ -72,7 +75,7 @@ exports.handler = async (event) => {
             await S3.putObject({
                 Key: objectKey,
                 Body: buffer,
-                Bucket: 'merca4-images',
+                Bucket: targetbucket,
                 ContentType: `image/${targetExtension}`,
                 ACL: 'public-read'
             }).promise()
