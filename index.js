@@ -45,7 +45,8 @@ exports.handler = async (event) => {
             }).promise()
 
             const objectExtension = data.ContentType.replace('image/', '')
-            const targetExtension = ['jpeg', 'jpg'].includes(objectExtension) ? 'jpeg' : 'webp'
+            // USE <picture> in front-end to fallback to jpeg if webp is not supported
+            const targetExtension = 'jpeg' //['jpeg', 'jpg'].includes(objectExtension) ? 'jpeg' : 'webp'
 
             let buffer
             if (targetExtension === 'jpeg') {
