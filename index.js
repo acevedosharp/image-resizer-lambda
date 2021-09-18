@@ -59,6 +59,7 @@ exports.handler = async (event) => {
                         height: perFolderSizeMappings[targetFolder].height,
                         fit: sharp.fit.cover
                     })
+                    .flatten({ background: '#FFFFFF' })
                     .jpeg({ quality: 100, mozjpeg: true })
                     .toBuffer()
             } else {
