@@ -1,3 +1,17 @@
+# Environment Variables
+- ORIGIN_BUCKET
+- TARGET_BUCKET
+- PRODUCT_WIDTH
+- PRODUCT_HEIGHT
+- CATEGORY_WIDTH
+- CATEGORY_HEIGHT
+- PROMOTION_WIDTH
+- PROMOTION_HEIGHT
+- BANNER_WIDTH
+- BANNER_HEIGHT
+- ACCESS_KEY
+- SECRET_KEY
+
 # Sharp instructions
 https://sharp.pixelplumbing.com/install#aws-lambda
 
