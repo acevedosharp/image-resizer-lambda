@@ -26,7 +26,7 @@ exports.handler = async (event) => {
 
     const S3 = new AWS.S3({
         signatureVersion: 'v4',
-        region: 'us-east-2',
+        region: 'us-east-1',
         credentials: {
             accessKeyId: process.env.ACCESS_KEY,
             secretAccessKey: process.env.SECRET_KEY
